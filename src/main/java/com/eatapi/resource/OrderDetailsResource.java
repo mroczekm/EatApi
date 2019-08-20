@@ -15,13 +15,24 @@ public class OrderDetailsResource {
     OrderDetailsRepository orderDetailsRepository;
 
     @PostMapping
-    public void save(@RequestBody OrderDetails orderDetails){
+    public void save(@RequestBody OrderDetails orderDetails) {
         this.orderDetailsRepository.save(orderDetails);
     }
 
     @GetMapping(value = "/getByOrderId/{id}")
-    public List<OrderDetails> getByOrderId(@PathVariable("id") int id){
+    public List<OrderDetails> getByOrderId(@PathVariable("id") int id) {
         return this.orderDetailsRepository.findByOrderId(id);
 
+    }
+
+    @GetMapping(value = "/getByUserId/{id}")
+    public List<OrderDetails> getByUserId(@PathVariable("id") int id) {
+        return this.orderDetailsRepository.findByUserId(id);
+
+    }
+
+    @DeleteMapping(value = "{id}")
+    public void deleteById(@PathVariable("id") int id) {
+        this.orderDetailsRepository.deleteById(id);
     }
 }

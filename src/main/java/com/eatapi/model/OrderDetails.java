@@ -21,6 +21,8 @@ public class OrderDetails {
     @JoinColumn(name="user_id", nullable=false, insertable = false, updatable = false)
     private User user;
 
+    private String dish;
+
     private double price;
 
     private String description;
