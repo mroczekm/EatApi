@@ -1,9 +1,13 @@
 package com.eatapi.resource;
 
+import com.eatapi.EmailServiceImpl;
 import com.eatapi.model.Order;
+import com.eatapi.model.User;
+import com.eatapi.repository.OrderDetailsRepository;
 import com.eatapi.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +19,12 @@ public class OrderResource {
 
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
+    EmailServiceImpl emailService;
+
+    @Autowired
+    OrderDetailsRepository orderDetailsRepository;
 
     @GetMapping(value = "/all")
     public List<Order> getAll(){
@@ -38,7 +48,8 @@ public class OrderResource {
     }
 
     @PostMapping
-    public void save(@RequestBody Order order){
+    public void save(@RequestBody Order order) {
         this.orderRepository.save(order);
+        emailService.sendMails(order);
     }
 }
